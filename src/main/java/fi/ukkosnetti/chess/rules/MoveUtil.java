@@ -16,6 +16,27 @@ public final class MoveUtil {
 
 	private final static int MIN_COORD = 0, MAX_COORD = 7;
 	
+	/**
+	 * Filters out illegal moves from the given moves and transforms them to list of board states
+	 * @param moves to filter and transform
+	 * @return list of board states moves were transformed into
+	 */
+	public static List<Board> filterAndTransformMoves(List<Move> moves) {
+		return moves.stream()
+				.filter(Objects::nonNull)
+				.filter(MoveUtil::isMoveOnBoard)
+				.filter(MoveUtil::moveDoesNotCollideWithOwnPiece)
+				.map(MoveUtil::transformMove)
+				.filter(MoveUtil::isBoardNotInMate)
+				.collect(Collectors.toList());
+	}
+	
+	/**
+	 * Retuns diagonal moves for piece
+	 * @param board state piece is in
+	 * @param piece that moves are returned for
+	 * @return list of diagonal moves for the piece
+	 */
 	public static List<Move> getDiagonalMoves(Board board, Piece piece) {
 		List<Move> moves = new ArrayList<>();
 		moves.addAll(getMovesUntilBlocked(board, 1, 1, piece));
@@ -25,6 +46,12 @@ public final class MoveUtil {
 		return moves;
 	}
 	
+	/**
+	 * Retuns horizontal and vertical moves for piece
+	 * @param board state piece is in
+	 * @param piece that moves are returned for
+	 * @return list of horizontal and diagonal moves
+	 */
 	public static List<Move> getHorizontalAndVerticalMoves(Board board, Piece piece) {
 		List<Move> moves = new ArrayList<>();
 		moves.addAll(getMovesUntilBlocked(board, 0, 1, piece));
@@ -34,14 +61,21 @@ public final class MoveUtil {
 		return moves;
 	}
 	
-	public static List<Board> filterAndTransformMoves(List<Move> moves) {
-		return moves.stream().filter(Objects::nonNull).filter(MoveUtil::isMoveOnBoard).filter(MoveUtil::moveDoesNotCollideWithOwnPiece).map(MoveUtil::transformMove).filter(MoveUtil::moveDoesNotCauseMate).collect(Collectors.toList());
-	}
-	
+	/**
+	 * Checks whether given position is inside boundaries of board
+	 * @param pos position to check
+	 * @return true when position is inside board, false otherwise
+	 */
 	public static boolean isPositionInsideBoard(Position pos) {
 		return pos.x >= MIN_COORD && pos.x <= MAX_COORD && pos.y >= MIN_COORD && pos.y <= MAX_COORD;
 	}
 	
+	/**
+	 * Returns all the white or black pieces of the board
+	 * @param board where the information of pieces are retrieved from
+	 * @param whitePieces whether to return white or black pieces
+	 * @return list of pieces
+	 */
 	public static List<Piece> getPieces(Board board, boolean whitePieces) {
 		List<Piece> pieces = new ArrayList<>();
 		for (int y = 0; y < board.board.length ; y++) {
@@ -56,7 +90,12 @@ public final class MoveUtil {
 		return pieces;
 	}
 	
-	public static boolean moveDoesNotCauseMate(final Board board) {
+	/**
+	 * Checks whether current board position would cause a mate
+	 * @param board to evaluate
+	 * @return true if mate is not the current state
+	 */
+	public static boolean isBoardNotInMate(final Board board) {
 		boolean noMate = true;
 		if (!board.isDoNotCheckForMate()) {
 			final int kingToFind = board.turnOfWhite ? -6 : 6;
@@ -71,7 +110,12 @@ public final class MoveUtil {
 		}
 		return noMate;
 	}
-
+	
+	/**
+	 * Transforms move to board state
+	 * @param move to transform
+	 * @return board that is the result of transformed move
+	 */
 	public static Board transformMove(Move move) {
 		Integer[][] b = copyBoard(move.originalBoard.board);
 		b[move.position.y][move.position.x] = move.piece.getPieceValue();

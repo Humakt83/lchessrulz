@@ -57,7 +57,7 @@ public class King extends Piece {
 	private boolean castlingMoveCausesMate(List<Move> spotsToCheck) {
 		return spotsToCheck.stream()
 			.map(move -> MoveUtil.transformMove(move))
-			.filter(boardOfMove -> !MoveUtil.moveDoesNotCauseMate(boardOfMove))
+			.filter(boardOfMove -> !MoveUtil.isBoardNotInMate(boardOfMove))
 			.findAny().isPresent();
 	}
 
