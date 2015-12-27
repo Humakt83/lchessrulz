@@ -5,15 +5,30 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Main class of interest. 
+ * Represents board and the current state of the game.
+ *
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Board {
 
+	/**
+	 * All slots in the board. Positive number represents slot is occupied by a white piece while 
+	 * negative represents a black piece. Zero represents an empty slot.
+	 */
 	public final Integer[][] board;
 
 	public final Boolean turnOfWhite;
 	
+	/**
+	 * Move made previously. Useful overall and vital for handling en passant moves.
+	 */
 	public final Move lastMove;
 	
+	/**
+	 * Contains the information what moves have been made in the game that would prevent castling.
+	 */
 	public final CastlingState castlingState;
 	
 	@JsonIgnore
