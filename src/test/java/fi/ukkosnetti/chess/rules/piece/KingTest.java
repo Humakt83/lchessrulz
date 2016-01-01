@@ -85,4 +85,10 @@ public class KingTest {
 		assertEquals(5, king.getMoves(new Board(BoardTestUtil.createBoardWithPieces(king, new Rook(true, new Position(0, 7)), new Rook(false, new Position(1, 0))), true)).size());
 	}
 	
+	@Test
+	public void cannotCastleWhenThreatened() {
+		Piece king = new King(true, new Position(4, 7));
+		assertEquals(4, king.getMoves(new Board(BoardTestUtil.createBoardWithPieces(king, new Rook(true, new Position(7, 7)), new Rook(false, new Position(4, 0))), true)).size());
+	}
+	
 }

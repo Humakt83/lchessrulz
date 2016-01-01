@@ -23,8 +23,12 @@ public class King extends Piece {
 	@Override
 	public List<Board> getMoves(final Board board) {
 		List<Move> moves = getKingBasicMoves(board);
-		moves.addAll(getCastlingMoves(board));
+		if (!kingIsThreatened(board)) moves.addAll(getCastlingMoves(board));
 		return MoveUtil.filterAndTransformMoves(moves);
+	}
+
+	private boolean kingIsThreatened(Board board) {
+		return castlingMoveCausesMate(Arrays.asList(new MoveBuilder(position, position, this, board).build()));
 	}
 
 	private List<Move> getCastlingMoves(Board board) {
