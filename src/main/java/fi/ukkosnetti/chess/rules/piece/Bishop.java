@@ -17,4 +17,9 @@ public class Bishop extends Piece {
 		return MoveUtil.filterAndTransformMoves(MoveUtil.getDiagonalMoves(board, this));
 	}
 
+	@Override
+	protected int getPositionModifierForEvaluation(Board board) {
+		return MoveUtil.getDiagonalMoves(board, this).size();
+	}
+
 }

@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import fi.ukkosnetti.chess.dto.Board;
 import fi.ukkosnetti.chess.dto.Position;
 
-public abstract class Piece implements Movable {
+public abstract class Piece implements Movable, Evaluatable {
 
 	public final boolean whitePiece;
 
@@ -30,9 +30,11 @@ public abstract class Piece implements Movable {
 		return pieceValue * getSign();
 	}
 	
-	public int getEvaluationValue() {
-		return evaluationValue * getSign();
+	public int getEvaluationValue(Board board) {
+		return (evaluationValue + getPositionModifierForEvaluation(board)) * getSign();
 	}
+	
+	protected abstract int getPositionModifierForEvaluation(Board board);
 	
 	@Override
 	public boolean canEatKing(final Board board) {

@@ -20,4 +20,10 @@ public class Queen extends Piece {
 		return MoveUtil.filterAndTransformMoves(moves);
 	}
 
+	@Override
+	protected int getPositionModifierForEvaluation(Board board) {
+		return MoveUtil.getHorizontalAndVerticalMoves(board, this).size()
+				+ MoveUtil.getDiagonalMoves(board, this).size();
+	}
+
 }

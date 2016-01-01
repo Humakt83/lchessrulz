@@ -35,4 +35,9 @@ public class Rook extends Piece {
 		return blocker;
 	}
 
+	@Override
+	protected int getPositionModifierForEvaluation(Board board) {
+		return MoveUtil.getHorizontalAndVerticalMoves(board, this).size();
+	}
+
 }

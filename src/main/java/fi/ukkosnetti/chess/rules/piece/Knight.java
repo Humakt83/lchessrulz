@@ -25,4 +25,11 @@ public class Knight extends Piece {
 		return MoveUtil.filterAndTransformMoves(moves);
 	}
 
+	@Override
+	protected int getPositionModifierForEvaluation(Board board) {
+		int positionValue = position.x > 1 && position.x < 6 ? 2 : 0;
+		positionValue += position.y > 1 && position.y < 6 ? 2 : 0;
+		return positionValue;
+	}
+
 }

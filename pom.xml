@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fi.ukkosnetti</groupId>
 	<artifactId>lchessrulz</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>lchessrulz</name>
 	<description>Chess rules library</description>
 

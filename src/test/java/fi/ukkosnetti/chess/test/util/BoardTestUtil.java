@@ -2,7 +2,7 @@ package fi.ukkosnetti.chess.test.util;
 
 import fi.ukkosnetti.chess.rules.piece.Piece;
 
-public class BoardUtil {
+public class BoardTestUtil {
 
 	public static Integer[][] createEmptyBoard() {
 		return new Integer[][] {

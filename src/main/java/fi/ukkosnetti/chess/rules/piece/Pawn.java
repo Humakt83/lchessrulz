@@ -83,4 +83,14 @@ public class Pawn extends Piece {
 	private Consumer<Board> getEnPassantConsumer() {
 		return board -> board.board[board.lastMove.position.y][board.lastMove.position.x] = 0;
 	}
+
+	@Override
+	protected int getPositionModifierForEvaluation(Board board) {
+		int positionModifier = position.x == 4 || position.x == 5 ? 2 : 0;
+		positionModifier += position.x > 2 && position.x < 5 ? 1 : 0;
+		positionModifier += position.x > 1 && position.x < 6 ? 1 : 0;
+		positionModifier += whitePiece ? 6 - position.y : 0;
+		positionModifier += !whitePiece ? position.y - 1 : 0;
+		return positionModifier;
+	}
 }

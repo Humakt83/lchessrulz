@@ -11,6 +11,7 @@ import fi.ukkosnetti.chess.dto.CastlingState.CastlingBlocker;
 import fi.ukkosnetti.chess.dto.Move;
 import fi.ukkosnetti.chess.dto.MoveBuilder;
 import fi.ukkosnetti.chess.dto.Position;
+import fi.ukkosnetti.chess.rules.BoardUtil;
 import fi.ukkosnetti.chess.rules.MoveUtil;
 
 public class King extends Piece {
@@ -103,6 +104,16 @@ public class King extends Piece {
 	
 	private Move getKingBasicMove(Position newPosition, Board board) {
 		return new MoveBuilder(position, newPosition, this, board).addCastlingBlocker(whitePiece ? CastlingBlocker.WHITE_KING_MOVED : CastlingBlocker.BLACK_KING_MOVED).build();
+	}
+
+	@Override
+	protected int getPositionModifierForEvaluation(Board board) {
+		int positionalValue = 0;
+		if (BoardUtil.hasQueen(board, !whitePiece)) {
+			positionalValue += whitePiece && position.y == 7 || !whitePiece && position.y == 0 ? 5 : 0;
+			positionalValue += position.x > 5 || position.x < 3 ? 5 : 0;
+		}
+		return positionalValue;
 	}
 
 }
