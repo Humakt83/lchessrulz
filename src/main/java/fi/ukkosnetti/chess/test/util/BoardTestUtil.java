@@ -1,5 +1,6 @@
 package fi.ukkosnetti.chess.test.util;
 
+import fi.ukkosnetti.chess.rules.BoardUtil;
 import fi.ukkosnetti.chess.rules.piece.Piece;
 
 public class BoardTestUtil {
@@ -18,16 +19,7 @@ public class BoardTestUtil {
 	}
 	
 	public static Integer[][] createStartingBoard() {
-		return new Integer[][] {
-				{ -4, -2, -3, -5, -6, -3, -2, -4 },
-				{ -1, -1, -1, -1, -1, -1, -1, -1 },
-				{ 0, 0, 0, 0, 0, 0, 0, 0 },
-				{ 0, 0, 0, 0, 0, 0, 0, 0 },
-				{ 0, 0, 0, 0, 0, 0, 0, 0 },
-				{ 0, 0, 0, 0, 0, 0, 0, 0 },
-				{ 1, 1, 1, 1, 1, 1, 1, 1 },
-				{ 4, 2, 3, 5, 6, 3, 2, 4 }
-		};
+		return BoardUtil.createStartingBoard();
 	}
 
 	public static Integer[][] createBoardWithPieces(Piece... pieces) {
